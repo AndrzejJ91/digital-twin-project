@@ -23,6 +23,6 @@ const MachineSchema: Schema = new Schema({
 });
 
 
-export default mongoose.model<IMachine>("Maschine", MachineSchema);
+export default mongoose.model<IMachine>("Machine", MachineSchema);
 
 

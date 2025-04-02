@@ -2,6 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db";
+import maschineRoutes from "./routes/maschinesRoutes";
+
 
 dotenv.config();
 
@@ -14,6 +16,10 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("✅ test");
 });
+
+
+// Eksportujemy app do testów
+export default app;
 
 // 🔥 Główna funkcja startowa
 const startServer = async () => {
@@ -30,5 +36,11 @@ const startServer = async () => {
   }
 };
 
-startServer();
 
+
+if (require.main === module) {
+  startServer();
+}
+
+
+app.use("/api/maschine", maschineRoutes);

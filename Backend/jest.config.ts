@@ -12,7 +12,7 @@ const config: Config = {
   },
   testMatch: ['**/__tests__/**/*.ts', '**/?(*.)+(spec|test).ts'],
   moduleFileExtensions: ['ts', 'js', 'json', 'node'],
-  roots: ['<rootDir>/src'],
+  roots: ['<rootDir>'],
   verbose: true,
 };
 
