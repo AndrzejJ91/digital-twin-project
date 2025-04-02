@@ -1,0 +1,16 @@
+# Pliki środowiskowe (wrażliwe dane)
+.env
+.env.*  
+
+# Node modules 
+node_modules/
+
+# Pliki buildów i cache
+dist/
+build/
+out/
+*.log
+
+# Systemowe śmieci
+.DS_Store
+Thumbs.db

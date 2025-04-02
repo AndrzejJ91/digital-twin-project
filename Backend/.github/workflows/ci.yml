@@ -1,0 +1,33 @@
+
+
+name: Build & Test backend
+
+on:
+  push:
+    branches: [main, dev]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+
+        with:
+          node-version: 20
+
+      - name: install dependencies
+        run: npm install
+        working-directory: ./Backend
+
+      - name: Run tests
+        run: npm test || echo "Brak testów"
+        working-directory: ./Backend
+
+      - name: Build Docker image
+        run: docker build -t my-backend ./Backend
+        

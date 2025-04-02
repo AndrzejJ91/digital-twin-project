@@ -1,0 +1,59 @@
+version: "3.8"
+
+services:
+  backend:
+    build: .
+    container_name: twin-backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - PORT=3000
+      - MONGO_URL=mongodb://mongo:27017/twin
+      - MQTT_URL=mqtt://mqtt:1883
+      - RABBITMQ_URI=amqp://rabbitmq
+    depends_on:
+      - mongo
+      - mqtt
+      - rabbitmq
+    command: npm run dev
+    restart: unless-stopped
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  mqtt:
+    image: eclipse-mosquitto
+    container_name: mqtt
+    ports:
+      - "1883:1883"
+      - "9001:9001" # WebSocket (jeśli chcesz)
+    volumes:
+      - mqtt_data:/mosquitto/data
+      - mqtt_config:/mosquitto/config
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"     # AMQP
+      - "15672:15672"   # Web UI → http://localhost:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+volumes:
+  mongo_data:
+  mqtt_data:
+  mqtt_config:
+  rabbitmq_data:
+
