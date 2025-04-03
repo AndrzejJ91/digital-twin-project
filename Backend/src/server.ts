@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db";
 import maschineRoutes from "./routes/maschinesRoutes";
+import { startMqttClient } from "./config/mqtt";
 
 
 dotenv.config();
@@ -25,6 +26,7 @@ export default app;
 const startServer = async () => {
   try {
     await connectDB(); // najpierw łączymy z Mongo
+    await startMqttClient();
 
     app.listen(PORT, () => {
       console.log(`🚀 Server is working on port: ${PORT}`);
